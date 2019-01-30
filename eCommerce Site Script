@@ -1,0 +1,143 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.10deb1
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jan 30, 2019 at 01:05 AM
+-- Server version: 5.5.57-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.22
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `EcommerceStore`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Customer`
+--
+
+CREATE TABLE IF NOT EXISTS `Customer` (
+  `CustomerID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) DEFAULT NULL,
+  `Phone` varchar(255) DEFAULT NULL,
+  `Address` varchar(255) DEFAULT NULL,
+  `Email` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`CustomerID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `Customer`
+--
+
+INSERT INTO `Customer` (`CustomerID`, `Name`, `Phone`, `Address`, `Email`) VALUES
+(1, 'Sally Johnson', '555-555-5555', '34355 Cherry St.', 'asdjfhsdugfh@gmail.com'),
+(2, 'Sarah Peterson', '555-555-5555', '44383 Oak Ave. S', '458Flyy@yahoo.com'),
+(3, 'Hairy Jackson', '555-555-5555', '4453 Smack St. W', 'jogSeenA@gmail.com'),
+(4, 'Jan Dunlop', '555-555-5555', '1233 S Richman Ave.', 'eek8484@net.com'),
+(5, 'Kevin Richardson', '555-555-5555', '9958 14th Ave. N', 'imajerkforjerky@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Products`
+--
+
+CREATE TABLE IF NOT EXISTS `Products` (
+  `ProductID` int(11) NOT NULL AUTO_INCREMENT,
+  `PurchasePrice` varchar(255) DEFAULT NULL,
+  `SalePrice` varchar(255) DEFAULT NULL,
+  `Description` varchar(255) DEFAULT NULL,
+  `ProductType` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ProductID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=88800 ;
+
+--
+-- Dumping data for table `Products`
+--
+
+INSERT INTO `Products` (`ProductID`, `PurchasePrice`, `SalePrice`, `Description`, `ProductType`) VALUES
+(11224, '600', 'N/A', 'Shoei Helmet', 'Motorcycle Helmet'),
+(11544, 'N/A', '250.99', '11" Ape Hangers', 'Motorcycle Parts'),
+(17885, '354.99', 'N/A', 'Harley Pipes', 'Motorcycle Parts'),
+(36326, 'N/A', '86.99', 'Biltwell Gringo ', 'Motorcycle Helmet'),
+(88799, '450.99', 'N/A', 'Le Pera Motorcycle Seat', 'Motorcycle Seats');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Sales`
+--
+
+CREATE TABLE IF NOT EXISTS `Sales` (
+  `SaleID` int(11) NOT NULL AUTO_INCREMENT,
+  `Date` date DEFAULT NULL,
+  `CustomerID` int(11) NOT NULL,
+  PRIMARY KEY (`SaleID`),
+  KEY `CustomerID` (`CustomerID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=227 ;
+
+--
+-- Dumping data for table `Sales`
+--
+
+INSERT INTO `Sales` (`SaleID`, `Date`, `CustomerID`) VALUES
+(222, '2019-01-31', 1),
+(223, '2019-01-31', 2),
+(224, '2019-02-01', 3),
+(225, '2019-02-01', 4),
+(226, '2019-02-02', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `SalesDetail`
+--
+
+CREATE TABLE IF NOT EXISTS `SalesDetail` (
+  `SaleID` int(11) NOT NULL,
+  `ProductID` int(11) NOT NULL,
+  KEY `SaleID` (`SaleID`),
+  KEY `ProductID` (`ProductID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `SalesDetail`
+--
+
+INSERT INTO `SalesDetail` (`SaleID`, `ProductID`) VALUES
+(222, 11224),
+(223, 11544),
+(224, 17885),
+(225, 36326),
+(226, 88799);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `Sales`
+--
+ALTER TABLE `Sales`
+  ADD CONSTRAINT `Sales_ibfk_1` FOREIGN KEY (`CustomerID`) REFERENCES `Customer` (`CustomerID`);
+
+--
+-- Constraints for table `SalesDetail`
+--
+ALTER TABLE `SalesDetail`
+  ADD CONSTRAINT `SalesDetail_ibfk_1` FOREIGN KEY (`SaleID`) REFERENCES `Sales` (`SaleID`),
+  ADD CONSTRAINT `SalesDetail_ibfk_2` FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
